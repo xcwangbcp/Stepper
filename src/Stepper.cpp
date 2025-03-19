@@ -170,6 +170,39 @@ Stepper::Stepper(int number_of_steps, int motor_pin_1, int motor_pin_2,
 }
 
 /*
+ *   constructor for L298P
+ *   Sets which wires should control the motor.
+ */
+Stepper::Stepper(int number_of_steps, int motor_pin_1, int motor_pin_2,
+  int motor_pin_3, int motor_pin_4,
+  int motor_pin_5,int motor_pin_6)
+{
+this->step_number = 0;    // which step the motor is on
+this->direction = 0;      // motor direction
+this->last_step_time = 0; // timestamp in us of the last step taken
+this->number_of_steps = number_of_steps; // total number of steps for this motor
+
+// Arduino pins for the motor control connection:
+this->motor_pin_1 = motor_pin_1;
+this->motor_pin_2 = motor_pin_2;
+this->motor_pin_3 = motor_pin_3;
+this->motor_pin_4 = motor_pin_4;
+this->motor_pin_5 = motor_pin_5;
+this->motor_pin_6 = motor_pin_6;
+
+// setup the pins on the microcontroller:
+pinMode(this->motor_pin_1, OUTPUT);
+pinMode(this->motor_pin_2, OUTPUT);
+pinMode(this->motor_pin_3, OUTPUT);
+pinMode(this->motor_pin_4, OUTPUT);
+pinMode(this->motor_pin_5, OUTPUT);
+pinMode(this->motor_pin_6, OUTPUT);
+
+// pin_count is used by the stepMotor() method:
+this->pin_count = 6;
+}
+
+/*
  * Sets the speed in revs per minute
  */
 void Stepper::setSpeed(long whatSpeed)
